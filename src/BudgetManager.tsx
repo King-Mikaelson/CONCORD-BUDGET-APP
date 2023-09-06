@@ -32,7 +32,7 @@ function BudgetManager() {
   const [error, setError] = useState<any | null>(null);
   const saved = JSON.parse(localStorage.getItem("items")!);
   const [data, setData] = useState<Budget[] | []>([]);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<any | null>(null);
   const [validatingUser, setValidatingUser] = useState(true);
 
 
@@ -45,7 +45,7 @@ function BudgetManager() {
       } else {
         // User is signed out
         // ...
-        setUser({})
+        setUser(null)
       }
       setValidatingUser(false)
 
@@ -166,6 +166,8 @@ function BudgetManager() {
   },
    [user])
 
+   console.log(user)
+
   return (
     <div className="BudgetManager">
       <ToastContainer/>
@@ -183,16 +185,19 @@ function BudgetManager() {
           validatingUser={validatingUser}
         />}></Route>
         <Route path="/view" element={<Layout setUser={setUser}/>}>
-        <Route path="/view/budget"  element={ <ViewBudgetList items={data} />} />
+        <Route path="/view/budget"  element={ user ? <ViewBudgetList items={data} isPending={isPending} />  : <Navigate to={`/`} /> } />
         <Route
           path="/view/budget/:id"
           element={
+            user ? 
             <ViewSingleBudget
               items={data}
               DeleteSingleBudgetItem={DeleteSingleBudgetItem}
               EditSingleBudgetItem={EditSingleBudgetItem}
               AddSingleBudgetItem={AddSingleBudgetItem}
+              isPending={isPending}
             />
+            : <Navigate to={`/`} />
           }
         />
         </Route>

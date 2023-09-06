@@ -1,15 +1,14 @@
 import React from 'react';
-import {FiSettings} from "react-icons/fi"
-import{AiOutlinePlus} from "react-icons/ai"
+import{BiLogOut} from "react-icons/bi"
 import {IoReturnUpBackOutline} from "react-icons/io5"
-import {useNavigate, Link} from "react-router-dom"
+import {useNavigate} from "react-router-dom"
 import { signOut } from "firebase/auth";
 import {auth} from "../../firebase/firebaseConfig";
 import { toast } from 'react-toastify';
 
 
 type Props = {
-  setUser: React.Dispatch<React.SetStateAction<{}>>;
+  setUser: React.Dispatch<React.SetStateAction<any | null>>;
 };
 
 
@@ -20,7 +19,7 @@ function Hero({setUser}:Props) {
     signOut(auth).then(() => {
     // Sign-out successful.
         toast.success("Signed out successfully")
-        setUser({})
+        setUser(null)
         navigate("/")
     }).catch((error) => {
     // An error happened.
@@ -39,7 +38,7 @@ function Hero({setUser}:Props) {
    </button>
 
    <button onClick={() =>handleLogout()} className='md:flex gap-2  px-5 bg-red-500 items-center rounded-lg h-fit py-3 justify-center hidden '>
-    <AiOutlinePlus className='text-white'/>
+    <BiLogOut className='text-white'/>
     <p className="text-white font-workSans font-semibold text-sm">Logout</p>
    </button>
     </div>

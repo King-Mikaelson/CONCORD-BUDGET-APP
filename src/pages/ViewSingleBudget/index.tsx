@@ -1,10 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
-import { GrFormClose } from "react-icons/gr";
-import { IoCalendarClearOutline } from "react-icons/io5";
-import { AiOutlineClockCircle, AiOutlinePlus } from "react-icons/ai";
+import { useEffect, useState } from "react";
+import {  AiOutlinePlus } from "react-icons/ai";
 import { Link, useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { BottomSheet } from "react-spring-bottom-sheet";
 import EditItem from "../../components/EditItem";
 import AddItem from "../../components/AddItem";
 
@@ -40,6 +36,7 @@ type Props = {
     amount: number,
     status: string
   ) => void;
+  isPending: boolean
 };
 
 function ViewSingleBudget({
@@ -47,6 +44,7 @@ function ViewSingleBudget({
   DeleteSingleBudgetItem,
   EditSingleBudgetItem,
   AddSingleBudgetItem,
+  isPending
 }: Props) {
   const { id } = useParams();
   const item = items?.find((item: any) => item.id === Number(id));
@@ -91,10 +89,10 @@ function ViewSingleBudget({
     outstandingBalance();
   }, [items]);
 
-  if (!items) {
+  if (isPending) {
     return (
       // Loading Spinner
-      <div className="flex justify-center h-screen items-center">
+      <div className="flex justify-center items-center">
         <div className="lds-roller">
           <div></div>
           <div></div>

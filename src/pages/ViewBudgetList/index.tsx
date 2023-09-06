@@ -17,13 +17,14 @@ type Budget = {
 
 type Props = {
   items: Budget[];
+  isPending: boolean
 };
 
-export default function ViewBudgetList({ items }: Props) {
+export default function ViewBudgetList({ items,isPending }: Props) {
 
-  if (!items) {
+  if (isPending) {
     return (
-      <div className="flex justify-center h-screen items-center">
+      <div className="flex justify-center items-center">
         <div className="lds-roller">
           <div></div>
           <div></div>

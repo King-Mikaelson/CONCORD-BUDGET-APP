@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 
 type Props = {
   user: {};
-  setUser: React.Dispatch<React.SetStateAction<{}>>;
+  setUser: React.Dispatch<React.SetStateAction<any | null>>;
   validatingUser: boolean;
   setValidatingUser: React.Dispatch<React.SetStateAction<boolean>>;
 };
