@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useEffect } from "react";
+import React, { useDebugValue, useEffect } from "react";
 import { Link} from "react-router-dom";
 import useTogglePassword from "../../hooks/useTogglePassword";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -84,15 +84,20 @@ function Login({ user, setUser, validatingUser, setValidatingUser}: Props) {
       });
   };
 
+  useEffect(() => {
+    if (user !== null && validatingUser === false){
+      toast.success("Sign In Succesful")
+      return navigate("/view/budget")
+    }
+  },[user,validatingUser])
  
 
   if (validatingUser) {
     return (
      <LoadingIndicator/>
     );
-  }
-
-  return (
+  }else{
+    return (
     <Formik
       initialValues={initialValues}
       validationSchema={SignInSchema}
@@ -196,7 +201,7 @@ function Login({ user, setUser, validatingUser, setValidatingUser}: Props) {
         );
       }}
     </Formik>
-  );
+  )}
 }
 
 export default Login;
