@@ -1,5 +1,6 @@
 import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 type ModalProps = {
   addModal: string | undefined;
@@ -29,7 +30,8 @@ export default function AddItem({
 
   const handleAddSingleItem = () => {
     if (status && name && amount) {
-      AddSingleBudgetItem(id, itemId, name, amount, status);
+    AddSingleBudgetItem(id, itemId, name, amount, status);
+    toast.success(`Item ${itemId} Added successfully`)
     } else {
       alert("Fields must not be empty");
       return;

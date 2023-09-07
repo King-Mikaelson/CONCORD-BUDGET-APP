@@ -1,5 +1,6 @@
 import { Button, Checkbox, Label, Modal, TextInput } from "flowbite-react";
 import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 type ModalProps = {
   editModal: string | undefined;
@@ -35,6 +36,7 @@ export default function EditItem({
 
   const handleEditSingleItem = () => {
     EditSingleBudgetItem(id, itemId!, name!, amount!, status!);
+    toast.success(`Item ${itemId} Edited successfully`)
     setEditModal(undefined);
   };
   //At initial mounting of the component we are setting the edit states to its previous item values until we edit them
@@ -105,7 +107,7 @@ export default function EditItem({
                 <Button>Cancel</Button>
               </div>
               <div onClick={handleEditSingleItem} className="flex ">
-                <Button>Add Item</Button>
+                <Button>Edit Item</Button>
               </div>
             </div>
           </div>
