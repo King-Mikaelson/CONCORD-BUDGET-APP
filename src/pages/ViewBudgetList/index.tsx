@@ -18,9 +18,11 @@ type Budget = {
 type Props = {
   items: Budget[];
   isPending: boolean
+  validatingUser:boolean
+
 };
 
-export default function ViewBudgetList({ items,isPending }: Props) {
+export default function ViewBudgetList({ items,isPending, validatingUser }: Props) {
 
   if (isPending) {
     return (
@@ -68,7 +70,31 @@ export default function ViewBudgetList({ items,isPending }: Props) {
             </thead>
             <tbody>
               {items?.map((item, index) => (
-                <tr key={item?.id}>
+                index%2 ?
+                <tr key={item?.id} className="hover:bg-[#ddd]">
+                <td className="border solid border-[#ddd] p-8">
+                  <p>{item?.id}</p>
+                </td>
+
+                <td className="border solid border-[#ddd] p-8">
+                  <p>{item?.name}</p>
+                </td>
+
+                <td className="border solid border-[#ddd] p-8">
+                  <p>₦{item?.totalBudgetAmount}</p>
+                </td>
+
+                <td className="border solid border-[#ddd] p-8">
+                  <p>{item?.status}</p>
+                </td>
+
+                <td className="border solid border-[#ddd] p-4 flex justify-center">
+                    <Link to={`/view/budget/${item.id}`}>
+                      <button className="px-5 py-3 bg-[#3F5BF6] items-center rounded-lg text-white">View full details</button>
+                    </Link>
+                  </td>
+              </tr> :
+               <tr key={item?.id} className="hover:bg-[#ddd] bg-[#f2f2f2]">
                   <td className="border solid border-[#ddd] p-8">
                     <p>{item?.id}</p>
                   </td>
@@ -85,9 +111,9 @@ export default function ViewBudgetList({ items,isPending }: Props) {
                     <p>{item?.status}</p>
                   </td>
 
-                  <td className="border solid border-[#ddd] p-8">
+                  <td className="border solid border-[#ddd] p-4 flex justify-center">
                     <Link to={`/view/budget/${item.id}`}>
-                      <button>View full details</button>
+                      <button className="px-5 py-3 bg-[#3F5BF6] items-center rounded-lg text-white">View full details</button>
                     </Link>
                   </td>
                 </tr>

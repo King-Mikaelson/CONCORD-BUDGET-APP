@@ -9,16 +9,25 @@ import { signInWithEmailAndPassword} from "firebase/auth";
 import { auth } from "../../firebase/firebaseConfig";
 import { useNavigate } from "react-router-dom";
 import { redirect } from "react-router-dom";
+import LoadingIndicator from "../../LoadingIndicator";
+
+
+
+type Session = {
+  isAuthenticated?: boolean;
+  redirectPath: string;
+}
 
 type Props = {
   user: {};
   setUser: React.Dispatch<React.SetStateAction<{}>>;
   validatingUser: boolean;
   setValidatingUser: React.Dispatch<React.SetStateAction<boolean>>;
+
 };
 
 
-function Login({ user, setUser, validatingUser, setValidatingUser }: Props) {
+function Login({ user, setUser, validatingUser, setValidatingUser}: Props) {
   const [InputType, ToggleIcon] = useTogglePassword();
   const navigate = useNavigate();
 
@@ -75,27 +84,11 @@ function Login({ user, setUser, validatingUser, setValidatingUser }: Props) {
       });
   };
 
-  useEffect(() => {
-    if(user){
-      navigate("/view/budget")
-    }
-  },[user])
+ 
 
   if (validatingUser) {
     return (
-      <div className="flex justify-center h-screen items-center">
-      <div className="lds-roller">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-      </div>
-
+     <LoadingIndicator/>
     );
   }
 

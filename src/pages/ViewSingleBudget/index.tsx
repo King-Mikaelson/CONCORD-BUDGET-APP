@@ -21,6 +21,7 @@ type Budget = {
 
 type Props = {
   items: Budget[];
+  validatingUser:boolean
   DeleteSingleBudgetItem: (id: number, itemId: number) => void;
   EditSingleBudgetItem: (
     id: number,
@@ -44,7 +45,8 @@ function ViewSingleBudget({
   DeleteSingleBudgetItem,
   EditSingleBudgetItem,
   AddSingleBudgetItem,
-  isPending
+  isPending,
+  validatingUser
 }: Props) {
   const { id } = useParams();
   const item = items?.find((item: any) => item.id === Number(id));
@@ -153,7 +155,7 @@ function ViewSingleBudget({
           <table className="border-collapse hidden md:block">
             <thead className="w-full text-left">
               <tr>
-                <th className="pt-3 pb-3 bg-[#3F5BF6] text-white border solid border-[#ddd] p-8">
+                <th className=" pt-3 pb-3 bg-[#3F5BF6] text-white border solid border-[#ddd] p-8">
                   Id
                 </th>
                 <th className="pt-3 pb-3 bg-[#3F5BF6] text-white border solid border-[#ddd] p-8">
@@ -175,7 +177,48 @@ function ViewSingleBudget({
             </thead>
             <tbody>
               {item?.items.map((item: any, index: number) => (
-                <tr key={item?.id}>
+               index%2 ? 
+               <tr key={item?.id} className="hover:bg-[#ddd]">
+                  <td className="border solid border-[#ddd] p-8">
+                    <p>{item?.id}</p>
+                  </td>
+                  <td className="border solid border-[#ddd] p-8">
+                    <p>{item?.name}</p>
+                  </td>
+
+                  <td className="border solid border-[#ddd] p-8">
+                    <p>₦ {item?.amount}</p>
+                  </td>
+
+                  <td className="border solid border-[#ddd] p-8">
+                    <p>{item?.status}</p>
+                  </td>
+
+                  <td className="border solid border-[#ddd] p-8 cursor-pointer">
+                    <button
+                      onClick={() => {
+                        EditItemId(
+                          item.id,
+                          item.name,
+                          item.amount,
+                          item.status
+                        );
+                        props.setEditModal("form-elements");
+                      }}
+                    >
+                      Edit
+                    </button>
+                  </td>
+                  <td className="border solid border-[#ddd] p-8 cursor-pointer">
+                    <button
+                      onClick={() =>
+                        DeleteSingleBudgetItem(Number(id), item.id)
+                      }
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr> : <tr key={item?.id} className="hover:bg-[#ddd] bg-[#f2f2f2]">
                   <td className="border solid border-[#ddd] p-8">
                     <p>{item?.id}</p>
                   </td>

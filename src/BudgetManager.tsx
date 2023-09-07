@@ -7,11 +7,10 @@ import { useEffect, useState } from "react";
 import Login from "./pages/login";
 import Layout from "./layout";
 import SignUp from "./pages/signup";
-import { onAuthStateChanged} from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebase/firebaseConfig";
-import 'react-toastify/dist/ReactToastify.css';
-
-
+import "react-toastify/dist/ReactToastify.css";
+import ProtectedRoute from "./layout/ProtectedRoute";
 
 type BudgetItem = {
   id: number;
@@ -35,24 +34,20 @@ function BudgetManager() {
   const [user, setUser] = useState<any | null>(null);
   const [validatingUser, setValidatingUser] = useState(true);
 
-
-  useEffect(()=>{
+  useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
-        setUser(user)
+        setUser(user);
       } else {
         // User is signed out
         // ...
-        setUser(null)
+        setUser(null);
       }
-      setValidatingUser(false)
-
+      setValidatingUser(false);
     });
-  },[])
-
-  
+  }, []);
 
   function DeleteSingleBudgetItem(id: number, itemId: number) {
     const newTexts = data.map((item) => {
@@ -158,52 +153,83 @@ function BudgetManager() {
       });
   }, []);
 
-
-  const isAuthenticated = () => user
+  const isAuthenticated = () => user;
 
   useEffect(() => {
-    isAuthenticated()
-  },
-   [user])
+    isAuthenticated();
+  }, [user]);
 
-   console.log(user)
+  console.log(user);
 
   return (
     <div className="BudgetManager">
-      <ToastContainer/>
+      <ToastContainer />
       <Routes>
-        <Route path="/" element={<Login
-          user={user}
-          setUser={setUser}
-          setValidatingUser={setValidatingUser}
-          validatingUser={validatingUser}
-        />}></Route>
-        <Route path="/signup" element={<SignUp
-          user={user}
-          setUser={setUser}
-          setValidatingUser={setValidatingUser}
-          validatingUser={validatingUser}
-        />}></Route>
-        <Route path="/view" element={<Layout setUser={setUser}/>}>
-        <Route path="/view/budget"  element={ user ? <ViewBudgetList items={data} isPending={isPending} />  : <Navigate to={`/`} /> } />
         <Route
-          path="/view/budget/:id"
+          path="/"
           element={
-            user ? 
-            <ViewSingleBudget
-              items={data}
-              DeleteSingleBudgetItem={DeleteSingleBudgetItem}
-              EditSingleBudgetItem={EditSingleBudgetItem}
-              AddSingleBudgetItem={AddSingleBudgetItem}
-              isPending={isPending}
+            <Login
+              user={user}
+              setUser={setUser}
+              setValidatingUser={setValidatingUser}
+              validatingUser={validatingUser}
             />
-            : <Navigate to={`/`} />
           }
-        />
+        ></Route>
+        <Route
+          path="/signup"
+          element={
+            <SignUp
+              user={user}
+              setUser={setUser}
+              setValidatingUser={setValidatingUser}
+              validatingUser={validatingUser}
+            />
+          }
+        ></Route>
+        <Route path="/view" element={<Layout setUser={setUser}  validatingUser={validatingUser} />}>
+          {/* <Route path="/view/budget"  element={<ViewBudgetList items={data} isPending={isPending} />  } /> */}
+          {/* <Route
+            path="/view/budget/:id"
+            element={
+              <ViewSingleBudget
+                items={data}
+                DeleteSingleBudgetItem={DeleteSingleBudgetItem}
+                EditSingleBudgetItem={EditSingleBudgetItem}
+                AddSingleBudgetItem={AddSingleBudgetItem}
+                isPending={isPending}
+              />
+            }
+          /> */}
+          <Route
+            path="/view/budget"
+            element={
+              <ProtectedRoute user={user} validatingUser={validatingUser}>
+                <ViewBudgetList items={data} isPending={isPending} validatingUser={validatingUser} />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/view/budget/:id"
+            element={
+              <ProtectedRoute user={user} validatingUser={validatingUser}>
+                <ViewSingleBudget
+                  items={data}
+                  DeleteSingleBudgetItem={DeleteSingleBudgetItem}
+                  EditSingleBudgetItem={EditSingleBudgetItem}
+                  AddSingleBudgetItem={AddSingleBudgetItem}
+                  isPending={isPending}
+                  validatingUser={validatingUser}
+                />
+              </ProtectedRoute>
+            }
+          />
         </Route>
+
       </Routes>
     </div>
   );
 }
 
 export default BudgetManager;
+

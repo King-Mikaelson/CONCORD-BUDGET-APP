@@ -96,7 +96,7 @@ export default function AddItem({
             <div className="flex justify-between">
               <div
                 onClick={() => setAddModal(undefined)}
-                className="text-cyan-700 hover:underline dark:text-cyan-500"
+                className=" hover:underline"
               >
                 <Button>Cancel</Button>
               </div>
