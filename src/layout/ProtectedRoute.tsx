@@ -16,7 +16,7 @@ const ProtectedRoute = ({ children, user,validatingUser }:Props) => {
 
   if (validatingUser) {
     // If authentication state is still loading, display a loading indicator or component
-    return <LoadingIndicator/>;
+    return (<LoadingIndicator/>);
   } else if (user === null && validatingUser === false) {
     // If the user is not authenticated and loading is complete, redirect to login
     return <Navigate to={"/"} state={{ from: location }} replace />

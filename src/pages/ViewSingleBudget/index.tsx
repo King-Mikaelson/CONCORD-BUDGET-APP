@@ -3,6 +3,8 @@ import {  AiOutlinePlus } from "react-icons/ai";
 import { Link, useParams } from "react-router-dom";
 import EditItem from "../../components/EditItem";
 import AddItem from "../../components/AddItem";
+import LoadingIndicator from "../../LoadingIndicator";
+import { toast } from "react-toastify";
 
 type BudgetItem = {
   id: number;
@@ -94,18 +96,7 @@ function ViewSingleBudget({
   if (isPending) {
     return (
       // Loading Spinner
-      <div className="flex justify-center items-center">
-        <div className="lds-roller">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
+     <LoadingIndicator/>
     );
   }
 
@@ -252,8 +243,9 @@ function ViewSingleBudget({
                   <td className="border solid border-[#ddd] p-8 cursor-pointer">
                     <button
                       onClick={() =>
-                        DeleteSingleBudgetItem(Number(id), item.id)
-                      }
+                        {DeleteSingleBudgetItem(Number(id), item.id);
+                         toast.success(`Item ${item.id} deleted successfully`)}
+                       }
                     >
                       Delete
                     </button>
@@ -286,10 +278,32 @@ function ViewSingleBudget({
                     <p>{item?.status}</p>
                   </div>
 
-                  <div className="border solid border-[#ddd] p-4 flex justify-center">
-                    <Link to={`/view/budget/${item.id}`} className="px-5 py-5 bg-[#3F5BF6] items-center rounded-lg text-white">
-                      <button>View full details</button>
-                    </Link>
+                  <div className="flex px-4 py-4 justify-between w-full">
+                  <div className="border solid border-[#ddd] px-6 p-4 cursor-pointer rounded-lg text-white bg-[#3F5BF6]">
+                    <button
+                      onClick={() => {
+                        EditItemId(
+                          item.id,
+                          item.name,
+                          item.amount!,
+                          item.status
+                        );
+                        props.setEditModal("form-elements");
+                      }}
+                    >
+                      Edit
+                    </button>
+                  </div>
+                  <div className="border solid border-[#ddd]  px-6 p-4 cursor-pointer bg-red-600 rounded-lg text-white">
+                    <button
+                      onClick={() =>
+                       {DeleteSingleBudgetItem(Number(id), item.id);
+                        toast.success(`Item ${item.id} deleted successfully`)}
+                      }
+                    >
+                      Delete
+                    </button>
+                  </div>
                   </div>
                 </div>
               ))}

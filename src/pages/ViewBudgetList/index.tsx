@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import LoadingIndicator from "../../LoadingIndicator";
 
 type BudgetItem = {
   id: number;
@@ -26,19 +27,8 @@ export default function ViewBudgetList({ items,isPending, validatingUser }: Prop
 
   if (isPending) {
     return (
-      <div className="flex justify-center items-center">
-        <div className="lds-roller">
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-          <div></div>
-        </div>
-      </div>
-    );
+     <LoadingIndicator/>
+    )
   }
 
   return (
