@@ -187,19 +187,31 @@ function BudgetManager() {
             />
           }
         ></Route>
-        <Route path="/view" element={<Layout setUser={setUser} user={user}  validatingUser={validatingUser} />}>
+        <Route
+          path="/view"
+          element={
+            <ProtectedRoute user={user} validatingUser={validatingUser}>
+            <Layout
+              setUser={setUser}
+              user={user}
+              validatingUser={validatingUser}
+            />
+            </ProtectedRoute>
+          }
+        >
           <Route
             path="/view/budget"
             element={
-              <ProtectedRoute user={user} validatingUser={validatingUser}>
-                <ViewBudgetList items={data} isPending={isPending} validatingUser={validatingUser} />
-              </ProtectedRoute>
+                <ViewBudgetList
+                  items={data}
+                  isPending={isPending}
+                  validatingUser={validatingUser}
+                />
             }
           />
           <Route
             path="/view/budget/:id"
             element={
-              <ProtectedRoute user={user} validatingUser={validatingUser}>
                 <ViewSingleBudget
                   items={data}
                   DeleteSingleBudgetItem={DeleteSingleBudgetItem}
@@ -208,7 +220,6 @@ function BudgetManager() {
                   isPending={isPending}
                   validatingUser={validatingUser}
                 />
-              </ProtectedRoute>
             }
           />
           {/* <Route path="/view/budget"  element={<ViewBudgetList items={data} isPending={isPending} />  } /> */}
@@ -225,11 +236,9 @@ function BudgetManager() {
             }
           /> */}
         </Route>
-
       </Routes>
     </div>
   );
 }
 
 export default BudgetManager;
-
