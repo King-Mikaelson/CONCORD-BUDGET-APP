@@ -31,7 +31,7 @@ export default function AddItem({
   const handleAddSingleItem = () => {
     if (status && name && amount) {
     AddSingleBudgetItem(id, itemId, name, amount, status);
-    toast.success(`Item ${itemId} Added successfully`)
+    toast.success(`Item ${name} Added successfully`)
     } else {
       alert("Fields must not be empty");
       return;

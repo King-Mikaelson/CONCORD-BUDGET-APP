@@ -78,7 +78,7 @@ export default function ViewBudgetList({ items,isPending, validatingUser }: Prop
                   <p>{item?.status}</p>
                 </td>
 
-                <td className="border solid border-[#ddd] p-4 flex justify-center">
+                <td className="border solid border-[#ddd] p-8">
                     <Link to={`/view/budget/${item.id}`}>
                       <button className="px-5 py-3 bg-[#3F5BF6] items-center rounded-lg text-white">View full details</button>
                     </Link>
@@ -101,7 +101,7 @@ export default function ViewBudgetList({ items,isPending, validatingUser }: Prop
                     <p>{item?.status}</p>
                   </td>
 
-                  <td className="border solid border-[#ddd] p-4 flex justify-center">
+                  <td className="border solid border-[#ddd] p-8">
                     <Link to={`/view/budget/${item.id}`}>
                       <button className="px-5 py-3 bg-[#3F5BF6] items-center rounded-lg text-white">View full details</button>
                     </Link>

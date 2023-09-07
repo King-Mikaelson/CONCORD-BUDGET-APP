@@ -187,6 +187,7 @@ function ViewSingleBudget({
 
                   <td className="border solid border-[#ddd] p-8 cursor-pointer">
                     <button
+                    className="flex items-center px-4 p-2 cursor-pointer rounded-lg text-white bg-[#3F5BF6]"
                       onClick={() => {
                         EditItemId(
                           item.id,
@@ -202,9 +203,11 @@ function ViewSingleBudget({
                   </td>
                   <td className="border solid border-[#ddd] p-8 cursor-pointer">
                     <button
+                    className="flex px-4 p-2 cursor-pointer bg-red-600 rounded-lg text-white"
                       onClick={() =>
-                        DeleteSingleBudgetItem(Number(id), item.id)
-                      }
+                        {DeleteSingleBudgetItem(Number(id), item.id);
+                         toast.success(`Item ${item.id} deleted successfully`)}
+                       }
                     >
                       Delete
                     </button>
@@ -227,6 +230,7 @@ function ViewSingleBudget({
 
                   <td className="border solid border-[#ddd] p-8 cursor-pointer">
                     <button
+                    className="flex items-center px-4 p-2 cursor-pointer rounded-lg text-white bg-[#3F5BF6]"
                       onClick={() => {
                         EditItemId(
                           item.id,
@@ -242,6 +246,7 @@ function ViewSingleBudget({
                   </td>
                   <td className="border solid border-[#ddd] p-8 cursor-pointer">
                     <button
+                    className="flex px-4 p-2 cursor-pointer bg-red-600 rounded-lg text-white"
                       onClick={() =>
                         {DeleteSingleBudgetItem(Number(id), item.id);
                          toast.success(`Item ${item.id} deleted successfully`)}
